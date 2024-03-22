@@ -1,0 +1,22 @@
+{
+    "black-formatter.args": [
+        "--line-length",
+        "79"
+    ],
+    "cSpell.words": [
+        "AMAPA",
+        "CUIABA",
+        "FLORIANOPOLIS",
+        "GONCALO",
+        "JABOATAO",
+        "JOAO",
+        "levelname",
+        "MACAPA",
+        "MARANHAO",
+        "MOSSORO",
+        "PIAUI",
+        "RONDONIA",
+        "UBERLANDIA",
+        "VARZEA"
+    ]
+}
