@@ -1,8 +1,7 @@
 from enum import Enum
 
 
-class StatesBrazil(Enum):
-    # Estados
+class BrazilStates(Enum):
     ACRE = "Acre"
     ALAGOAS = "Alagoas"
     AMAPA = "Amapá"

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class CidadesBrasil(Enum):
+class BrazilCities(Enum):
     # Acre
     RIO_BRANCO = "Rio Branco"
     CRUZEIRO_DO_SUL = "Cruzeiro do Sul"
