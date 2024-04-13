@@ -21,6 +21,7 @@ if __name__ == "__main__":
     data_manager = DataManager(csv_path)
     df = data_manager.csv_converter()
     dengue_analysis = DengueAnalysis(df)
+    # dengue_analysis.relation_concern_measures()
     # dengue_analysis.relation_media_vaccine()
     # dengue_analysis.relation_treatment_salary()
     # dengue_analysis.relation_recidivism_age()

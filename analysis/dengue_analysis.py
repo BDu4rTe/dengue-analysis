@@ -1,6 +1,9 @@
 import pandas as pd
+from rich import console
 
 from enums.dengue_columns import DengueColumns
+
+console = console.Console()
 
 
 class DengueAnalysis:
@@ -21,18 +24,16 @@ class DengueAnalysis:
 
     def relation_symptoms_media(self) -> None:
         # pegar a resposta da func lesser, porem precisa de ajustes.
-        self.__get_relation_by_value(
+        self.__get_relation_with_media(
             "Tosse",
             DengueColumns.SINTOMAS,
-            DengueColumns.FONTE_INFORMACAO,
         )
 
     def relation_symptoms_schooling(self) -> None:
         # pegar a resposta da func lesser, porem precisa de ajustes.
-        self.__get_relation_by_value(
+        self.__get_relation_with_schooling(
             "Tosse",
             DengueColumns.SINTOMAS,
-            DengueColumns.ESCOLARIDADE,
         )
 
     def lesser_know_combat(self) -> None:
@@ -53,25 +54,25 @@ class DengueAnalysis:
 
         recidivism_hate = (recidivism_count / all_answers_count) * 100
 
-        print(f"reincidência em :{recidivism_hate:.2f}%")
+        console.print(f"reincidência em :{recidivism_hate:.2f}%")
 
     def relation_recidivism_age(self) -> None:
         recidivism_values: list[str] = ["Duas", "Três ou mais"]
 
         for value in recidivism_values:
-            print(f"Value:{value}\n==== idade\n")
+            console.print(f"Value:{value}\n==== idade\n")
             self.__get_relation_by_value(
                 value,
                 DengueColumns.QUANTIDADE_DENGUE,
                 DengueColumns.IDADE,
             )
-            print("==== gênero\n")
+            console.print("==== gênero\n")
             self.__get_relation_by_value(
                 value,
                 DengueColumns.QUANTIDADE_DENGUE,
                 DengueColumns.GENERO,
             )
-            print("==== saneamento\n")
+            console.print("==== saneamento\n")
             self.__get_relation_by_value(
                 value,
                 DengueColumns.QUANTIDADE_DENGUE,
@@ -84,7 +85,7 @@ class DengueAnalysis:
         )
 
         for salary in salary_values:
-            print(f"Salario: {salary}\n")
+            console.print(f"Salario: {salary}\n")
             self.__get_relation_by_value(
                 salary,
                 DengueColumns.RENDA,
@@ -97,39 +98,70 @@ class DengueAnalysis:
         )
 
         for value in vaccine_values:
-            print(f"Decisão: {value}.\n")
-            self.__get_relation_by_value(
+            console.print(f"Decisão: {value}.\n")
+            self.__get_relation_with_media(
                 value,
                 DengueColumns.VACINACAO_SUS,
-                DengueColumns.FONTE_INFORMACAO,
+            )
+
+    def relation_concern_measures(self) -> None:
+        concern_values: list[str] = (
+            self.df[DengueColumns.PREOCUPACAO_DENGUE.value].unique().tolist()
+        )
+
+        for value in concern_values:
+            console.print(f"Preocupação: {value}\n")
+            self.__get_relation_by_value(
+                value,
+                DengueColumns.PREOCUPACAO_DENGUE,
+                DengueColumns.FREQUENCIA_ACOES_PREVENCAO,
             )
 
     def __get_relation_by_value(
         self,
         value: str,
-        valueColumn: DengueColumns,
-        relationColumn: DengueColumns,
+        value_column: DengueColumns,
+        relation_column: DengueColumns,
         both: bool = False,
     ) -> None:
         group_by_value = self.df.groupby(
-            self.df[valueColumn.value].str.contains(value)
+            self.df[value_column.value].str.contains(value)
         )
         if both:
             relation_by_value = group_by_value[
-                relationColumn.value
+                relation_column.value
             ].value_counts()
 
         relation_by_value = group_by_value.get_group(True)[
-            relationColumn.value
+            relation_column.value
         ].value_counts()
 
-        print(f"{relation_by_value}\n")
+        console.print(f"{relation_by_value}\n")
+
+    def __get_relation_with_schooling(
+        self, value: str, column_type: DengueColumns
+    ) -> None:
+        self.__get_relation_by_value(
+            value,
+            column_type.value,
+            DengueColumns.ESCOLARIDADE,
+        )
+
+    def __get_relation_with_media(
+        self, value: str, column_type: DengueColumns
+    ) -> None:
+        self.__get_relation_by_value(
+            value,
+            column_type.value,
+            DengueColumns.FONTE_INFORMACAO,
+        )
 
     def __get_lowest_occurrence_value(self, answer_series: pd.Series) -> None:
         answer_count = answer_series.value_counts()
-        print(answer_count)
         lowest_occurrence: int = answer_count.min()
+
         less_occurrence_values = answer_count[
             answer_count == lowest_occurrence
         ].index.tolist()
-        print(f"{less_occurrence_values}\n")
+
+        console.print(f"{less_occurrence_values}\n")
