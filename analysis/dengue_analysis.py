@@ -10,8 +10,6 @@ class DengueAnalysis:
     def __init__(self, default_df: pd.DataFrame) -> None:
         self.df = default_df
 
-    def clear_fields(): ...
-
     def rename_fields(self) -> list[str]:
         self.df.columns = [column_enum.value for column_enum in DengueColumns]
 

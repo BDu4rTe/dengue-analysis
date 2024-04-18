@@ -5,7 +5,7 @@ from dengue_analysis import DengueAnalysis
 from utils import get_csv_path
 
 logging.basicConfig(
-    level=logging.WARNING,
+    level=logging.INFO,
     format=(
         "[%(asctime)s] %(levelname)s   %(message)s -  %(name)s:%(lineno)d"
     ),
@@ -17,10 +17,14 @@ logger = logging.getLogger(__file__)
 
 
 if __name__ == "__main__":
-    csv_path: Path = get_csv_path("a3_renew_2024-04-03_20-23-48")
+    csv_path: Path = get_csv_path("dengue_normalized")
     data_manager = DataManager(csv_path)
     df = data_manager.csv_converter()
+    # data_manager.exclude_empty_columns()
     dengue_analysis = DengueAnalysis(df)
+    dengue_analysis.rename_fields()
+    print(dengue_analysis.df.iloc[0])
+    data_manager.generate_new_csv(dengue_analysis.df, "final_dengue")
     # dengue_analysis.relation_concern_measures()
     # dengue_analysis.relation_media_vaccine()
     # dengue_analysis.relation_treatment_salary()

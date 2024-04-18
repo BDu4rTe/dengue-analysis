@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from utils import get_csv_path, generate_name_with_timestamp
+from utils import get_csv_path, concat_name_with_timestamp
 import logging
 
 logger = logging.getLogger(__file__)
@@ -15,6 +15,7 @@ class DataManager:
 
     def csv_converter(self) -> pd.DataFrame:
         self.df = pd.read_csv(self.path)
+        self.exclude_empty_columns()
         return self.df
 
     def exclude_empty_columns(self) -> None:
@@ -22,6 +23,6 @@ class DataManager:
 
     @staticmethod
     def generate_new_csv(df: pd.DataFrame, filename: str) -> None:
-        name: str = generate_name_with_timestamp(filename)
+        name: str = concat_name_with_timestamp(filename)
         df.to_csv(get_csv_path(name), index=False)
         logger.info(f"New csv file saved with name: {name}")
