@@ -436,6 +436,48 @@ class Answer(object):
         if self.bairro in MAP:
             self.regiao = MAP[self.bairro]
 
+class Header(object):
+
+    def __init__(self):
+
+        self.header = ["Timestamp",
+                       "Idade",
+                       "Faixa Etária",
+                       "Gênero",
+                       "Escolaridade",
+                       "Ocupação",
+                       "Renda",
+                       "X Contágio",
+                       "Contágio Família",
+                       "Estado",
+                       "Cidade",
+                       "Bairro",
+                       "Região",
+                       "Tipo Moradia",
+                       "N Coabitação",
+                       "Fonte Informação",
+                       "Microorganismo",
+                       "Nota Microorganismo",
+                       "Formas Contágio",
+                       "Nota Contágio",
+                       "Sintomas",
+                       "Nota Sintomas",
+                       "Prevenção",
+                       "Nota Prevenção",
+                       "Combate",
+                       "Nota Combate",
+                       "Nota Final",
+                       "Tratamento",
+                       "Saneamento",
+                       "Governo",
+                       "Ações",
+                       "Preocupação",
+                       "Vacina"]
+
+    def as_list(self):
+
+        return self.header
+
 def main(args):
 
     if len(args) != 3:
@@ -452,6 +494,9 @@ def main(args):
 
     out = open(output_f, "w")
     csv_out = csv.writer(out, dialect=csv.unix_dialect())
+
+    h = Header()
+    csv_out.writerow(h.as_list())
 
     for line in d:
 
