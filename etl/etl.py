@@ -26,6 +26,7 @@ class Answer(object):
         self.moradores = line[12]
         self.informacoes = line[13]
         self.microorganismo = line[14]
+        self.nota_microorganismo = 0
         self.contagio = line[15]
         self.nota_contagio = 0
         self.sintomas = line[16]
@@ -284,6 +285,18 @@ class Answer(object):
         self.norm_moradores()
         self.norm_informacoes()
 
+    def calc_nota_microorganismo(self):
+
+        NOTA_INIC = 0.0
+        NOTA_MAX = 100.0
+
+        corretas = ["Vírus"]
+
+        self.nota_microorganismo = NOTA_INIC
+
+        if self.microorganismo in corretas:
+            self.nota_microorganismo = NOTA_MAX
+
     def calc_nota_formas_contagio(self):
 
         NOTA_INIC = 3.0
@@ -352,15 +365,17 @@ class Answer(object):
 
     def calc_notas(self):
 
+        self.calc_nota_microorganismo()
         self.calc_nota_formas_contagio()
         self.calc_nota_sintomas()
         self.calc_nota_prevencao()
         self.calc_nota_combate()
 
-        self.nota_final = round((self.nota_contagio +
+        self.nota_final = round((self.nota_microorganismo +
+                                 self.nota_contagio +
                                  self.nota_sintomas +
                                  self.nota_prevencao +
-                                 self.nota_combate) / 4.0, 2)
+                                 self.nota_combate) / 5.0, 2)
 
     def calc_faixa_etaria(self):
 
