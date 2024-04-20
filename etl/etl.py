@@ -25,7 +25,7 @@ class Answer(object):
         self.imovel = line[11]
         self.moradores = line[12]
         self.informacoes = line[13]
-        self.vetor = line[14]
+        self.microorganismo = line[14]
         self.contagio = line[15]
         self.nota_contagio = 0
         self.sintomas = line[16]
