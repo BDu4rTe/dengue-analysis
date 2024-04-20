@@ -422,14 +422,14 @@ class Answer(object):
                "Jarivatuba": "Sudeste",
                "João Costa": "Sudeste",
                "Morro do Meio": "Oeste",
-               "Nova Brasília": "Sudoeste",
+               "Nova Brasília": "Oeste",
                "Paranaguamirim": "Sudeste",
                "Petrópolis": "Sul",
                "Rio Bonito": "Norte",
                "Saguaçu": "Centro",
                "Santa Catarina": "Sul",
                "Santo Antônio": "Norte",
-               "São Marcos": "Sudoeste",
+               "São Marcos": "Oeste",
                "Ulysses Guimarães": "Sudeste",
                "Vila Nova": "Oeste"}
 
@@ -480,12 +480,13 @@ class Header(object):
 
 def main(args):
 
-    if len(args) != 3:
-        print("Use: __file__ <input.csv> <output.csv>")
+    if len(args) != 4:
+        print("Use: etl.py <input.csv> <output.csv> <output-joinville.csv>")
         sys.exit(1)
 
     input_f = args[1]
     output_f = args[2]
+    output_joi_f = args[3]
 
     data = open(input_f, "r").readlines()
     data = data[1:]
@@ -494,9 +495,12 @@ def main(args):
 
     out = open(output_f, "w")
     csv_out = csv.writer(out, dialect=csv.unix_dialect())
+    out_joi = open(output_joi_f, "w")
+    csv_joi_out = csv.writer(out_joi, dialect=csv.unix_dialect())
 
     h = Header()
     csv_out.writerow(h.as_list())
+    csv_joi_out.writerow(h.as_list())
 
     for line in d:
 
@@ -506,8 +510,11 @@ def main(args):
         a.calc_notas()
         a.def_regiao()
         csv_out.writerow(a.as_list())
+        if a.cidade == "Joinville":
+            csv_joi_out.writerow(a.as_list())
 
     out.close()
+    out_joi.close()
 
 if __name__ == "__main__":
     main(sys.argv)
