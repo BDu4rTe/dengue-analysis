@@ -34,13 +34,13 @@ class Answer(object):
         self.nota_prevencao = 0
         self.combate = line[18]
         self.nota_combate = 0
+        self.nota_final = 0
         self.tratamento = line[19]
         self.saneamento = line[20]
         self.governo = line[21]
         self.acoes = line[22]
         self.preocupado = line[23]
         self.vacina = line[24]
-        self.nota_final = 0
 
     def as_dict(self):
 
