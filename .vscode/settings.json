@@ -29,5 +29,6 @@
         "UBERLANDIA",
         "VACINACAO",
         "VARZEA"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }
