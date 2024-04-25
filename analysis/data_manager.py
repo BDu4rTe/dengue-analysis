@@ -8,6 +8,9 @@ logger = logging.getLogger(__file__)
 
 
 class DataManager(ABC):
+    @abstractmethod
+    def rename_columns(self) -> None:
+        """Método para renomear todas as colunas do DataFrame [pandas]"""
 
     def csv_converter(self, path: Path) -> pd.DataFrame:
         """Método para converter um arquivo csv em uma DataFrame [pandas]"""
@@ -18,10 +21,6 @@ class DataManager(ABC):
     def exclude_empty_columns(self) -> None:
         """Método para excluir todas as colunas vazias do DataFrame [pandas]"""
         self.df = self.df.dropna(axis=1, how="all")
-
-    @abstractmethod
-    def rename_columns(self) -> None:
-        """Método para renomear todas as colunas do DataFrame [pandas]"""
 
     def generate_new_csv(self, filename: str) -> None:
         """Método para gerar um novo arquivo csv a partir do DataFrame [pandas]

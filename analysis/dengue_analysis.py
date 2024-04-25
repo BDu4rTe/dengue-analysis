@@ -3,6 +3,7 @@ import pandas as pd
 from rich.console import Console
 from data_manager import DataManager
 from enums.dengue_columns import DengueColumns
+from enums.regions import Regions
 
 console = Console()
 
@@ -10,63 +11,31 @@ console = Console()
 class DengueAnalysis(DataManager):
 
     def __init__(self, path: Path) -> None:
-        self.df = self.csv_converter(path)
-
-    @property
-    def df(self):
-        return self.__df
-
-    @df.setter
-    def df(self, data_frame: pd.DataFrame) -> None:
-        self.__df = data_frame
-
-    @property
-    def zona_sul(self) -> pd.DataFrame:
-        return self.__zona_sul
-
-    @zona_sul.setter
-    def zona_zul(self, data_frame: pd.DataFrame) -> None:
-        self.__zona_sul = data_frame
-
-    @property
-    def zona_sudeste(self) -> pd.DataFrame:
-        return self.__zona_sudeste
-
-    @zona_sudeste.setter
-    def zona_sudeste(self, data_frame: pd.DataFrame) -> None:
-        self.__zona_sudeste = data_frame
-
-    @property
-    def zona_sudoeste(self) -> pd.DataFrame:
-        return self.__zona_sudoeste
-
-    @zona_sudoeste.setter
-    def zona_sudoeste(self, data_frame: pd.DataFrame) -> None:
-        self.__zona_sudoeste = data_frame
-
-    @property
-    def zona_oeste(self) -> pd.DataFrame:
-        return self.__zona_oeste
-
-    @zona_oeste.setter
-    def zona_oeste(self, data_frame: pd.DataFrame) -> None:
-        self.__zona_oeste = data_frame
-
-    @property
-    def zona_leste(self) -> pd.DataFrame:
-        return self.__zona_leste
-
-    @zona_leste.setter
-    def zona_leste(self, data_frame) -> None:
-        self.__zona_leste = data_frame
-
-    @property
-    def zona_nordeste(self) -> pd.DataFrame:
-        return self.__zona_nordeste
-
-    @zona_nordeste.setter
-    def zona_nordeste(self, data_frame: pd.DataFrame) -> None:
-        self.__zona_nordeste = data_frame
+        self.main_df = self.csv_converter(path)
+        self.zona_sul = self.__set_zone(Regions.SUL)
+        self.zona_sudoeste = self.__set_zone(Regions.SUDOESTE)
+        self.zona_sudeste = self.__set_zone(Regions.SUDESTE)
+        self.zona_norte = self.__set_zone(Regions.NORTE)
+        self.zona_nordeste = self.__set_zone(Regions.NORDESTE)
+        self.zona_leste = self.__set_zone(Regions.LESTE)
+        self.zona_oeste = self.__set_zone(Regions.OESTE)
+        self.zona_centro = self.__set_zone(Regions.CENTRO)
 
     def rename_columns(self) -> None:
-        self.df.columns = [column_enum.value for column_enum in DengueColumns]
+        """Método para renomear o header de todas as
+        colunas do DataFrame.
+        """
+        self.main_df.columns = [
+            column_enum.value for column_enum in DengueColumns
+        ]
+
+    def __set_zone(self, region: Regions) -> pd.DataFrame:
+        """Método para separar a região fornecida do DataFrame
+        principal e configurar um DataFrame para exclusivo para a mesma.
+        :param region: Região que sera separada do data frame original.
+        """
+        return self.main_df[
+            self.main_df[DengueColumns.REGIAO.value] == region.value
+        ]
+
+    def get_lowest_know_symptom(self, zone: pd.DataFrame) -> None: ...

@@ -8,6 +8,7 @@ pandas = "*"
 pandas-stubs = "*"
 jinja2 = "*"
 rich = "*"
+seaborn = "*"
 
 [dev-packages]
 
