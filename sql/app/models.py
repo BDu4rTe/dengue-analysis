@@ -114,6 +114,7 @@ class Resposta(db.Model):
 
     timestamp = db.Column(db.DateTime, nullable=False)
     idade = db.Column(db.Integer, nullable=False)
+    faixa_etaria = db.Column(db.String, nullable=False)
     genero = db.Column(db.String, nullable=False)
 
     id_escolaridade = db.Column(db.Integer, db.ForeignKey("en_escolaridade.id_escolaridade"))
@@ -148,10 +149,16 @@ class Resposta(db.Model):
     fonte_informacao = db.relationship("FonteInformacao")
 
     microorganismo = db.Column(db.String)
+    nota_microorganismo = db.Column(db.Float)
     formas_contagio = db.Column(db.String)
+    nota_formas_contagio = db.Column(db.Float)
     sintomas = db.Column(db.String)
+    nota_sintomas = db.Column(db.Float)
     prevencao = db.Column(db.String)
+    nota_prevencao = db.Column(db.Float)
     combate = db.Column(db.String)
+    nota_combate = db.Column(db.Float)
+    nota_final = db.Column(db.Float)
 
     id_tratamento = db.Column(db.Integer, db.ForeignKey("en_tratamento.id_tratamento")) 
     tratamento = db.relationship("Tratamento")

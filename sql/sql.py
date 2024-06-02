@@ -184,6 +184,7 @@ def insert_answers():
         R = Resposta()
         R.timestamp = datetime.strptime(line[0], "%Y/%m/%d %I:%M:%S %p GMT-3")
         R.idade = line[1]
+        R.faixa_etaria = line[2]
         R.genero = line[3][0]
         R.escolaridade = Escolaridade.query.filter_by(nome=line[4]).first()
         R.ocupacao = Ocupacao.query.filter_by(nome=line[5]).first()
@@ -197,10 +198,16 @@ def insert_answers():
         R.coabitacao = int(line[14])
         R.fonte_informacao = FonteInformacao.query.filter_by(nome=line[15]).first()
         R.microorganismo = line[16]
+        R.nota_microorganismo = line[17]
         R.formas_contagio = line[18]
+        R.nota_formas_contagio = line[19]
         R.sintomas = line[20]
+        R.nota_sintomas = line[21]
         R.prevencao = line[22]
+        R.nota_prevencao = line[23]
         R.combate = line[24]
+        R.nota_combate = line[25]
+        R.nota_final = line[26]
         R.tratamento = Tratamento.query.filter_by(nome=line[27]).first()
         R.saneamento = int(line[28])
         R.governo = int(line[29])
